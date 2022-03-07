@@ -1,9 +1,89 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { userAction } from '../actions';
 
 class Login extends React.Component {
+  state = {
+    email: '',
+    password: '',
+    isDisable: true,
+  }
+
+  validateEmail = () => {
+    const { email, password } = this.state;
+    const emailFormat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    const minPassword = 6;
+
+    const emailIsValid = emailFormat.test(email);
+
+    if (
+      emailIsValid
+      && password.length >= minPassword) return this.setState({ isDisable: false });
+
+    this.setState({ isDisable: true });
+  }
+
+  handleChange = ({ target: { value, name } }) => {
+    this.setState({ [name]: value }, this.validateEmail);
+  }
+
+  submit = (e) => {
+    e.preventDefault();
+    const { email } = this.state;
+    const { loginDispatch, history } = this.props;
+    loginDispatch(email);
+    history.push('/carteira');
+  }
+
   render() {
-    return <div>Login</div>;
+    const { email, password, isDisable } = this.state;
+    return (
+      <form onSubmit={ this.submit }>
+        <fieldset>
+          <legend>Login</legend>
+          <label htmlFor="email">
+            E-mail
+            <input
+              value={ email }
+              onChange={ this.handleChange }
+              name="email"
+              required
+              data-testid="email-input"
+            />
+          </label>
+          <label htmlFor="password">
+            Senha
+            <input
+              value={ password }
+              onChange={ this.handleChange }
+              name="password"
+              data-testid="password-input"
+              required
+              minLength={ 6 }
+            />
+          </label>
+          <button
+            type="submit"
+            disabled={ isDisable }
+          >
+            ENTRAR
+          </button>
+        </fieldset>
+      </form>
+    );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  loginDispatch: (state) => dispatch(userAction(state)),
+});
+
+Login.propTypes = {
+  loginDispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
