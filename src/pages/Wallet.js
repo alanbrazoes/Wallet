@@ -5,13 +5,12 @@ import PropTypes from 'prop-types';
 class Wallet extends React.Component {
   state = {
     total: 0,
-    courrency: 'BLR',
+    courrency: 'BRL',
   }
 
   render() {
     const { email } = this.props;
     const { total, courrency } = this.state;
-    console.log(email);
     return (
       <header>
         <h1>TrybeWallet</h1>
