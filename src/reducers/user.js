@@ -2,10 +2,10 @@ const initialState = {
   email: '',
 };
 
-const userReducer = (state = initialState, action) => {
-  switch (action.type) {
+const userReducer = (state = initialState, { email, type }) => {
+  switch (type) {
   case 'user':
-    return { ...state, email: action.email };
+    return { ...state, email };
   default:
     return { ...state };
   }
