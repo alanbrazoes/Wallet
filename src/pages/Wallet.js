@@ -12,7 +12,7 @@ class Wallet extends React.Component {
     method: '',
     value: 0,
     courrency: '',
-    ticker: false,
+    ticker: [],
   }
 
   componentDidMount() {
@@ -36,7 +36,7 @@ class Wallet extends React.Component {
     try {
       const response = await fetch('https://economia.awesomeapi.com.br/json/all');
       const data = await response.json();
-      const arrayData = Object.keys(data);
+      const arrayData = Object.keys(data).filter((ticker) => ticker !== 'USDT');
       this.setState({ ticker: arrayData });
     } catch (error) {
       return error;
@@ -79,14 +79,18 @@ class Wallet extends React.Component {
               value={ description }
             />
           </label>
-          <label htmlFor="courrent" data-testid="currency-input">
-            Moeda
+          <label htmlFor="courrency">
+            Moeda:
             <select
+              id="courrency"
+              data-testid="currency-input"
               name="courrency"
               value={ courrency }
               onChange={ this.handleChange }
             >
-              {ticker && ticker.map((tick) => <option key={ tick }>{tick}</option>)}
+              {ticker.map((
+                tick,
+              ) => <option key={ tick } data-testid={ `${tick}` }>{tick}</option>)}
             </select>
           </label>
           <label htmlFor="method" data-testid="method-input">
