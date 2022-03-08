@@ -29,7 +29,7 @@ class Wallet extends React.Component {
     ) => value * exchangeRates[currency].ask)
       .reduce((acc, number) => acc + number, 0);
 
-    return total.toFixed(2);
+    return total.toFixed();
   }
 
   submit = async (e) => {
