@@ -5,11 +5,16 @@ const initialState = {
 
 const walletReducer = (
   state = initialState,
-  { type, tag, description, method, value, courrency, id },
+  { type, tag, description, method, value, currency, id, exchangeRates },
 ) => {
   switch (type) {
   case 'wallet': {
-    return { ...state, expenses: [{ id, tag, courrency, method, description, value }] };
+    return { ...state,
+      expenses: [
+        ...state.expenses,
+        { id, value, currency, method, tag, description, exchangeRates },
+      ],
+    };
   }
   default:
     return { ...state };

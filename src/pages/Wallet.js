@@ -3,41 +3,66 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { walletAction } from '../actions';
 
+const initialPayment = 'Cartão de crédito';
+const initialTag = 'Lazer';
+
 class Wallet extends React.Component {
   state = {
     total: 0,
-    courrencyHeader: 'BRL',
-    tag: '',
+    courrencyHeader: 'USD',
+    tag: initialTag,
     description: '',
-    method: '',
+    method: initialPayment,
     value: 0,
-    courrency: '',
+    currency: 'USD',
     ticker: [],
   }
 
-  componentDidMount() {
-    this.fetchTicker();
+  async componentDidMount() {
+    this.setState({ ticker: await this.fetchTicker() });
   }
 
-  submit = (e) => {
+  getTotalValue = () => {
+    const { expenses } = this.props;
+    const total = expenses.map((
+      { value, exchangeRates, currency },
+    ) => value * exchangeRates[currency].ask)
+      .reduce((acc, number) => acc + number, 0);
+
+    return total.toFixed(2);
+  }
+
+  submit = async (e) => {
     e.preventDefault();
     const { expenses } = this.props;
     const { walletDispatch } = this.props;
     const id = expenses.length;
+    const exchangeRates = await this.fetchTicker('submit');
 
-    walletDispatch(this.state, id);
+    walletDispatch(this.state, exchangeRates, id);
+
+    this.setState({
+      total: 0,
+      courrencyHeader: 'USD',
+      tag: 'Trabalho',
+      description: '',
+      method: 'Cartão de débito',
+      value: 0,
+      currency: '',
+    });
   }
 
   handleChange = ({ target: { value, name } }) => {
     this.setState({ [name]: value });
   }
 
-  fetchTicker = async () => {
+  fetchTicker = async (submit) => {
     try {
       const response = await fetch('https://economia.awesomeapi.com.br/json/all');
       const data = await response.json();
       const arrayData = Object.keys(data).filter((ticker) => ticker !== 'USDT');
-      this.setState({ ticker: arrayData });
+      if (submit === 'submit') return data;
+      return arrayData;
     } catch (error) {
       return error;
     }
@@ -46,15 +71,15 @@ class Wallet extends React.Component {
   render() {
     const { email } = this.props;
     const {
-      total, courrencyHeader, value, method,
-      description, tag, courrency, ticker } = this.state;
+      courrencyHeader, value, method,
+      description, tag, currency, ticker } = this.state;
     return (
       <>
         <header>
           <h1>TrybeWallet</h1>
           <section>
             <p data-testid="email-field">{`Email: ${email}`}</p>
-            <p data-testid="total-field">{`Total: ${total}`}</p>
+            <p data-testid="total-field">{`Total: ${this.getTotalValue()}`}</p>
             <p data-testid="header-currency-field">{courrencyHeader}</p>
           </section>
         </header>
@@ -79,13 +104,13 @@ class Wallet extends React.Component {
               value={ description }
             />
           </label>
-          <label htmlFor="courrency">
+          <label htmlFor="currency">
             Moeda:
             <select
-              id="courrency"
+              id="currency"
               data-testid="currency-input"
-              name="courrency"
-              value={ courrency }
+              name="currency"
+              value={ currency }
               onChange={ this.handleChange }
             >
               {ticker.map((
@@ -120,17 +145,19 @@ class Wallet extends React.Component {
           <button type="submit">Adicionar despesa</button>
         </form>
         <table>
-          <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
-          </tr>
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Tag</th>
+              <th>Método de pagamento</th>
+              <th>Valor</th>
+              <th>Moeda</th>
+              <th>Câmbio utilizado</th>
+              <th>Valor convertido</th>
+              <th>Moeda de conversão</th>
+              <th>Editar/Excluir</th>
+            </tr>
+          </thead>
         </table>
       </>
     );
@@ -143,7 +170,9 @@ const mapStateToProps = ({ user: { email }, wallet: { expenses } }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  walletDispatch: (state, id) => dispatch(walletAction(state, id)),
+  walletDispatch: (
+    state, exchangeRates, id,
+  ) => dispatch(walletAction(state, exchangeRates, id)),
 });
 
 Wallet.propTypes = {
