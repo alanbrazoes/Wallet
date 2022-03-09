@@ -1,0 +1,16 @@
+header {
+  align-items: center;
+  display: flex;
+  height: 10vh;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.sectionHeader {
+  display: flex;
+  height: 100%;
+}
+
+h1 {
+  color: rgb(23, 95, 14);
+}

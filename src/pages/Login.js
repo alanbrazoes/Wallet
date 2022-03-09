@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { userAction } from '../actions';
+import '../style/form.css';
 
 class Login extends React.Component {
   state = {
@@ -39,38 +40,40 @@ class Login extends React.Component {
   render() {
     const { email, password, isDisable } = this.state;
     return (
-      <form onSubmit={ this.submit }>
-        <fieldset>
-          <legend>Login</legend>
-          <label htmlFor="email">
-            E-mail
-            <input
-              value={ email }
-              onChange={ this.handleChange }
-              name="email"
-              required
-              data-testid="email-input"
-            />
-          </label>
-          <label htmlFor="password">
-            Senha
-            <input
-              value={ password }
-              onChange={ this.handleChange }
-              name="password"
-              data-testid="password-input"
-              required
-              minLength={ 6 }
-            />
-          </label>
-          <button
-            type="submit"
-            disabled={ isDisable }
-          >
-            ENTRAR
-          </button>
-        </fieldset>
-      </form>
+      <div className="container">
+        <form onSubmit={ this.submit }>
+          <fieldset className="form">
+            <legend>Login</legend>
+            <label htmlFor="email">
+              E-mail
+              <input
+                value={ email }
+                onChange={ this.handleChange }
+                name="email"
+                required
+                data-testid="email-input"
+              />
+            </label>
+            <label htmlFor="password">
+              Senha
+              <input
+                value={ password }
+                onChange={ this.handleChange }
+                name="password"
+                data-testid="password-input"
+                required
+                minLength={ 6 }
+              />
+            </label>
+            <button
+              type="submit"
+              disabled={ isDisable }
+            >
+              ENTRAR
+            </button>
+          </fieldset>
+        </form>
+      </div>
     );
   }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import '../style/table.css';
 // import { dispatch } from 'redux';
 // import { deleteAction } from '../actions';
 

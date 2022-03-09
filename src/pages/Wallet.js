@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { walletAction } from '../actions';
 import Table from '../components/Table';
+import '../style/header.css';
+import '../style/form.css';
 
 const initialPayment = 'Cartão de crédito';
 const initialTag = 'Lazer';
@@ -77,14 +79,14 @@ class Wallet extends React.Component {
       <>
         <header>
           <h1>TrybeWallet</h1>
-          <section>
+          <section className="sectionHeader">
             <p data-testid="email-field">{`Email: ${email}`}</p>
             <p data-testid="total-field">{`Total: ${this.getTotalValue()}`}</p>
             <p data-testid="header-currency-field">{currencyHeader}</p>
           </section>
         </header>
 
-        <form onSubmit={ this.submit }>
+        <form onSubmit={ this.submit } className="form">
           <label htmlFor="value">
             Valor
             <input
