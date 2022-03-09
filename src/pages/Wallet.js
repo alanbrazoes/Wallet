@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { walletAction } from '../actions';
+import Table from '../components/Table';
 
 const initialPayment = 'Cartão de crédito';
 const initialTag = 'Lazer';
 
 class Wallet extends React.Component {
   state = {
-    total: 0,
-    courrencyHeader: 'USD',
+    currencyHeader: 'BRL',
     tag: initialTag,
     description: '',
     method: initialPayment,
@@ -29,7 +29,7 @@ class Wallet extends React.Component {
     ) => value * exchangeRates[currency].ask)
       .reduce((acc, number) => acc + number, 0);
 
-    return total.toFixed();
+    return total.toFixed(2);
   }
 
   submit = async (e) => {
@@ -43,7 +43,7 @@ class Wallet extends React.Component {
 
     this.setState({
       total: 0,
-      courrencyHeader: 'USD',
+      courrencyHeader: 'BRL',
       tag: 'Trabalho',
       description: '',
       method: 'Cartão de débito',
@@ -71,7 +71,7 @@ class Wallet extends React.Component {
   render() {
     const { email } = this.props;
     const {
-      courrencyHeader, value, method,
+      currencyHeader, value, method,
       description, tag, currency, ticker } = this.state;
     return (
       <>
@@ -80,7 +80,7 @@ class Wallet extends React.Component {
           <section>
             <p data-testid="email-field">{`Email: ${email}`}</p>
             <p data-testid="total-field">{`Total: ${this.getTotalValue()}`}</p>
-            <p data-testid="header-currency-field">{courrencyHeader}</p>
+            <p data-testid="header-currency-field">{currencyHeader}</p>
           </section>
         </header>
 
@@ -144,21 +144,7 @@ class Wallet extends React.Component {
           </label>
           <button type="submit">Adicionar despesa</button>
         </form>
-        <table>
-          <thead>
-            <tr>
-              <th>Descrição</th>
-              <th>Tag</th>
-              <th>Método de pagamento</th>
-              <th>Valor</th>
-              <th>Moeda</th>
-              <th>Câmbio utilizado</th>
-              <th>Valor convertido</th>
-              <th>Moeda de conversão</th>
-              <th>Editar/Excluir</th>
-            </tr>
-          </thead>
-        </table>
+        <Table />
       </>
     );
   }

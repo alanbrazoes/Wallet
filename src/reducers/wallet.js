@@ -16,6 +16,12 @@ const walletReducer = (
       ],
     };
   }
+  case 'DELETE_EXPENSE': {
+    return {
+      ...state,
+      expenses: state.expenses.filter((expense) => expense.id !== id),
+    };
+  }
   default:
     return { ...state };
   }

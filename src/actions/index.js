@@ -6,3 +6,5 @@ export const walletAction = (state, exchangeRates, id) => {
     type: 'wallet', tag, currency, method, description, value, id, exchangeRates,
   };
 };
+
+export const deleteAction = (id) => ({ type: 'DELETE_EXPENSE', id });
