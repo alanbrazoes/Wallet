@@ -6,3 +6,7 @@
   <li>ReactJS</li>
   <li>Redux</li>
 </ul>
+<h3>Como rodar em sua máquina:</h3>
+<p>Vá até a pasta root onde está localizado o arquivo package.json e rode os seguintes comandos em seu terminal:</p>
+<code>npm install</code>
+<code>npm start</code>
