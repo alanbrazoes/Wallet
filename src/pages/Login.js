@@ -8,7 +8,6 @@ class Login extends React.Component {
   state = {
     email: '',
     password: '',
-    isDisable: true,
   }
 
   validateEmail = () => {
@@ -65,7 +64,6 @@ class Login extends React.Component {
             </label>
             <button
               type="submit"
-              disabled={ isDisable }
             >
               ENTRAR
             </button>
