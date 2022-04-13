@@ -42,7 +42,7 @@ class Login extends React.Component {
     return (
       <div className="container">
         <form onSubmit={ this.submit }>
-          <fieldset className="form">
+          <fieldset>
             <legend>Login</legend>
             <label htmlFor="email">
               E-mail

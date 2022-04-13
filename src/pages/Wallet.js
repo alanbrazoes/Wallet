@@ -78,39 +78,36 @@ class Wallet extends React.Component {
     return (
       <>
         <header>
-          <h1>TrybeWallet</h1>
+          <h1>Wallet</h1>
           <section className="sectionHeader">
-            <p data-testid="email-field">{`Email: ${email}`}</p>
-            <p data-testid="total-field">{`Total: ${this.getTotalValue()}`}</p>
+            <p data-testid="email-field" className="user">{`Email: ${email}`}</p>
+            <p data-testid="total-field" className="total">{`Total: ${this.getTotalValue()}`}</p>
             <p data-testid="header-currency-field">{currencyHeader}</p>
           </section>
         </header>
 
         <form onSubmit={ this.submit } className="form">
-          <label htmlFor="value">
+          <label htmlFor="value" className="inputs">
             Valor
             <input
               onChange={ this.handleChange }
               type="number"
               name="value"
-              data-testid="value-input"
               value={ value }
             />
           </label>
-          <label htmlFor="description">
+          <label htmlFor="description" className="inputs">
             Descrição
             <input
               onChange={ this.handleChange }
               name="description"
-              data-testid="description-input"
               value={ description }
             />
           </label>
-          <label htmlFor="currency">
+          <label htmlFor="currency" className="inputs">
             Moeda:
             <select
               id="currency"
-              data-testid="currency-input"
               name="currency"
               value={ currency }
               onChange={ this.handleChange }
@@ -120,7 +117,8 @@ class Wallet extends React.Component {
               ) => <option key={ tick } data-testid={ `${tick}` }>{tick}</option>)}
             </select>
           </label>
-          <label htmlFor="method" data-testid="method-input">
+          <label htmlFor="method" className="inputs">
+            Method
             <select
               onChange={ this.handleChange }
               name="method"
@@ -131,7 +129,8 @@ class Wallet extends React.Component {
               <option>Dinheiro</option>
             </select>
           </label>
-          <label htmlFor="tag" data-testid="tag-input">
+          <label htmlFor="tag" className="inputs">
+            Tag    
             <select
               onChange={ this.handleChange }
               name="tag"

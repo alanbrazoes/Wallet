@@ -14,3 +14,9 @@ header {
 h1 {
   color: rgb(23, 95, 14);
 }
+
+.user, .total {
+  margin: 0 8px;
+  display: flex;
+  align-items: center;
+}
