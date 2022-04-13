@@ -80,9 +80,9 @@ class Wallet extends React.Component {
         <header>
           <h1>Wallet</h1>
           <section className="sectionHeader">
-            <p data-testid="email-field" className="user">{`Email: ${email}`}</p>
+            <p className="user">{`Email: ${email}`}</p>
             <p data-testid="total-field" className="total">{`Total: ${this.getTotalValue()}`}</p>
-            <p data-testid="header-currency-field">{currencyHeader}</p>
+            <p>{currencyHeader}</p>
           </section>
         </header>
 

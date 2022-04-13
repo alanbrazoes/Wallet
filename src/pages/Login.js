@@ -51,7 +51,6 @@ class Login extends React.Component {
                 onChange={ this.handleChange }
                 name="email"
                 required
-                data-testid="email-input"
               />
             </label>
             <label htmlFor="password">
@@ -60,7 +59,6 @@ class Login extends React.Component {
                 value={ password }
                 onChange={ this.handleChange }
                 name="password"
-                data-testid="password-input"
                 required
                 minLength={ 6 }
               />
