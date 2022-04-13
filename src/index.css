@@ -15,4 +15,5 @@ code {
 
 #root {
   height: 100vh;
+  padding: 0 4px;
 }

@@ -2,16 +2,14 @@ thead {
   background-color: rgb(23, 95, 14);
 }
 
-table {
+.table {
   width: 100%;
-}
-
-tr {
-  margin: auto;
 }
 
 th {
   color: whitesmoke;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 td {

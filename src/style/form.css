@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100vw;
+  width: 100%;
 }
 
 .container {
@@ -22,8 +22,4 @@ input {
   display: block;
   margin: 4px 0;
   padding: 2px 4px;
-}
-
-form {
-  width: fit-content;
 }
