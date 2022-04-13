@@ -37,7 +37,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const { email, password, isDisable } = this.state;
+    const { email, password } = this.state;
     return (
       <div className="container">
         <form onSubmit={ this.submit }>
