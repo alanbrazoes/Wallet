@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { walletAction } from '../actions';
+import { walletAction } from '../redux/actions';
 import Table from '../components/Table';
 import '../style/header.css';
 import '../style/form.css';
